@@ -25,6 +25,15 @@ public class BookingDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        //Constraints Unique
+        modelBuilder.Entity<Employee>()
+            .HasIndex(e => new
+            {
+                e.NIK,
+                e.Email,
+                e.PhoneNumber
+            }).IsUnique();
+
         //University - Education (One to Many)
         modelBuilder.Entity<University>()
             .HasMany(university => university.Educations)
@@ -42,7 +51,6 @@ public class BookingDbContext : DbContext
         .HasOne(account => account.Employee)
         .WithOne(employee => employee.Account)
         .HasForeignKey<Account>(Account => Account.Guid);
-
 
         //Employee - Booking (One to Many)
         modelBuilder.Entity<Employee>()
@@ -69,4 +77,4 @@ public class BookingDbContext : DbContext
             .HasForeignKey(AccountRole => AccountRole.RoleGuid);
     }
 
-}//class BookingDbContext : DbContext
+}//main

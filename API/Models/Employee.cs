@@ -8,7 +8,7 @@ namespace API.Models;
 
 public class Employee : BaseEntity
 {
-    [Column("nik", TypeName = "string(6)")]
+    [Column("nik", TypeName = "nchar(6)")]
     public string NIK { get; set; }
 
     [Column("first_name", TypeName = "nvarchar(100)")]
@@ -33,7 +33,7 @@ public class Employee : BaseEntity
     public string PhoneNumber { get; set; }
 
     //Cardinality
-    public ICollection<Booking> Bookings { get; set; }
-    public Education Education { get; set; }
-    public Account Account { get; set; }
+    public ICollection<Booking>? Bookings { get; set; }
+    public Education? Education { get; set; }
+    public Account? Account { get; set; }
 }
