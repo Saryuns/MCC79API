@@ -2,9 +2,9 @@
 
 public enum StatusLevel
 {
-    Request = 0,
-    Reject = 1,
-    UpComing = 2,
-    OnGoing = 3,
-    Done = 4
+    Request,
+    Reject,
+    UpComing,
+    OnGoing,
+    Done
 }

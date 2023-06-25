@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using API.Utilities.Enums;
 
 namespace API.Models;
 
-[Table("tb_m_bookings")]
+[Table("tb_tr_bookings")]
 
 public class Booking : BaseEntity
 {
@@ -20,10 +21,10 @@ public class Booking : BaseEntity
     public DateTime EndDate { get; set; }
 
     [Column("status")]
-    public int Status { get; set; }
+    public StatusLevel Status { get; set; }
 
     [Column("remarks", TypeName = "nvarchar(255)")]
-    public String Remarks { get; set; }
+    public String? Remarks { get; set; }
 
     //Cardinality
     public Employee? Employee { get; set; }

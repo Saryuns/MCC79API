@@ -20,7 +20,7 @@ public class BookingDbContext : DbContext
     public DbSet<Room> Rooms { get; set; }
     public DbSet<University> Universities { get; set; }
 
-    //Relationship
+    //Configuration or Fluent API
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -76,5 +76,4 @@ public class BookingDbContext : DbContext
             .WithOne(accountrole => accountrole.Role)
             .HasForeignKey(AccountRole => AccountRole.RoleGuid);
     }
-
 }//main
