@@ -1,16 +1,18 @@
 ﻿using API.Contracts;
 using API.Models;
+using API.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
 
 namespace API.Controllers;
 
-public class GeneralController<TEntity> : ControllerBase where TEntity : class
+[ApiController]
+public class GeneralController<TRepository, TEntity> : ControllerBase
+    where TRepository : IGeneralRepository<TEntity>
+    where TEntity : class
 {
-    private readonly IRepository<TEntity> _repository;
+    protected readonly TRepository _repository;
 
-    public GeneralController(IRepository<TEntity> repository)
+    public GeneralController(TRepository repository)
     {
         _repository = repository;
     }
@@ -31,7 +33,7 @@ public class GeneralController<TEntity> : ControllerBase where TEntity : class
     [HttpGet("{id}")]
     public IActionResult GetById(Guid id)
     {
-        var entity = _repository.GetById(id);
+        var entity = _repository.GetByGuid(id);
         if (entity is null)
         {
             return NotFound();
@@ -48,9 +50,9 @@ public class GeneralController<TEntity> : ControllerBase where TEntity : class
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(Guid id, TEntity entity)
+    public IActionResult Update(TEntity entity)
     {
-        var isUpdated = _repository.Update(id, entity);
+        var isUpdated = _repository.Update(entity);
         if (!isUpdated)
         {
             return NotFound();

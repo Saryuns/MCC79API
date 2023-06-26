@@ -1,14 +1,15 @@
 ﻿using API.Contracts;
 using API.Models;
+using API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/roles")]
-public class RoleController : GeneralController<Role>
+public class RoleController : GeneralController<IRoleRepository, Role>
 {
-    public RoleController(IRepository<Role> repository) : base(repository)
+    public RoleController(IRoleRepository repository) : base(repository)
     {
     }
 }
