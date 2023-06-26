@@ -40,18 +40,6 @@ public class GeneralController<TEntity> : ControllerBase where TEntity : class
         return Ok(entity);
     }
 
-    [HttpGet("{name}")]
-    public IActionResult GetByName(string name)
-    {
-        var entity = _repository.GetByName(name);
-        if (entity is null)
-        {
-            return NotFound();
-        }
-
-        return Ok(entity);
-    }
-
     [HttpPost]
     public IActionResult Create(TEntity entity)
     {
