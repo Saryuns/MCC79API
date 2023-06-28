@@ -11,7 +11,7 @@ public class Education : BaseEntity
     public Guid UniversityGuid { get; set; }
 
     [Column("major", TypeName = "nvarchar(100)")]
-    public string Code { get; set; }
+    public string Major { get; set; }
 
     [Column("degree", TypeName = "nvarchar(100)")]
     public string Degree { get; set; }

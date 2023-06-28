@@ -17,7 +17,7 @@ public class Account : BaseEntity
     public int OTP { get; set; }
 
     [Column("is_used")]
-    public int IsUsed { get; set; }
+    public bool IsUsed { get; set; }
 
     [Column("expired_time")]
     public DateTime ExpiredTime { get; set; }
