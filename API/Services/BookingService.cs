@@ -1,10 +1,7 @@
 ﻿using API.Contracts;
 using API.DTOs.Bookings;
 using API.Models;
-using API.Repositories;
 using API.Utilities.Enums;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 
 namespace API.Services;
 
@@ -62,14 +59,13 @@ public class BookingService
         return toDto;
     }
 
-    public BookingDto? CreateBooking(BookingDto newBookingDto)
+    public BookingDto? CreateBooking(NewBookingDto newBookingDto)
     {
         var booking = new Booking
         {
             Guid = new Guid(),
             StartDate = newBookingDto.StartDate,
             EndDate = newBookingDto.EndDate,
-            Status = newBookingDto.Status,
             Remarks = newBookingDto.Remarks,
             RoomGuid = newBookingDto.RoomGuid,
             EmployeeGuid = newBookingDto.EmployeeGuid,
@@ -88,7 +84,6 @@ public class BookingService
             Guid = createdBooking.Guid,
             StartDate = createdBooking.StartDate,
             EndDate = createdBooking.EndDate,
-            Status = createdBooking.Status,
             Remarks = createdBooking.Remarks,
             RoomGuid = createdBooking.RoomGuid,
             EmployeeGuid = createdBooking.EmployeeGuid,

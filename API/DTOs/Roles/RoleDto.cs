@@ -1,4 +1,4 @@
-﻿using API.Utilities.Enums;
+﻿using API.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs.Roles;

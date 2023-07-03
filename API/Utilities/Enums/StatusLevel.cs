@@ -2,8 +2,8 @@
 
 public enum StatusLevel
 {
-    Request,
-    Reject,
+    Requested,
+    Rejected,
     UpComing,
     OnGoing,
     Done

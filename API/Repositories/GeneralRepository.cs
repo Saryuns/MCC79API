@@ -1,5 +1,6 @@
 ﻿using API.Contracts;
 using API.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories;
 
@@ -12,7 +13,7 @@ public class GeneralRepository<TEntity> : IGeneralRepository<TEntity> where TEnt
         _context = context;
     }
 
-    public ICollection<TEntity> GetAll()
+    public IEnumerable<TEntity> GetAll()
     {
         return _context.Set<TEntity>().ToList();
     }

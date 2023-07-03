@@ -1,4 +1,4 @@
-﻿namespace API.Utilities.Enums;
+﻿namespace API.Utilities.Handlers;
 
 public class ResponseHandler<TEntity>
 {

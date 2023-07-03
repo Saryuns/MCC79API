@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Models;
 
@@ -17,7 +16,7 @@ public class Education : BaseEntity
     public string Degree { get; set; }
 
     [Column("gpa")]
-    public double GPA { get; set; }
+    public float GPA { get; set; }
 
     //Cardinality
     public University? University { get; set; }

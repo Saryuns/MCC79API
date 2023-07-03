@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using API.Utilities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Models;
@@ -7,7 +7,7 @@ namespace API.Models;
 
 public class Account : BaseEntity
 {
-    [Column("password", TypeName = "nvarchar(255)")]
+    [Column("password")]
     public string Password { get; set; }
 
     [Column("is_deleted")]
@@ -25,4 +25,7 @@ public class Account : BaseEntity
     //Cardinality
     public ICollection<AccountRole>? AccountRoles { get; set; }
     public Employee? Employee { get; set; }
+
+    //Add Roles
+    public List<RoleType> Roles { get; set; }
 }

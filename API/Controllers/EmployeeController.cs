@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using API.DTOs.Employees;
 using API.Services;
-using API.Utilities.Enums;
+using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -65,7 +65,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(EmployeeDto newEmployeeDto)
+    public IActionResult Create(NewEmployeeDto newEmployeeDto)
     {
         var createEmployee = _service.CreateEmployee(newEmployeeDto);
         if (createEmployee is null)

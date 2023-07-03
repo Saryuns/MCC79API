@@ -62,7 +62,7 @@ public class EmployeeService
         return toDto;
     }
 
-    public EmployeeDto? CreateEmployee(EmployeeDto newEmployeeDto)
+    public EmployeeDto? CreateEmployee(NewEmployeeDto newEmployeeDto)
     {
         var employee = new Employee
         {
@@ -155,16 +155,16 @@ public class EmployeeService
 
     public string GenerateNIK()
     {
-        var getLastNIK = _employeeRepository.GetAll()
+        var getlastNIK = _employeeRepository.GetAll()
                                             .Select(employee => employee.NIK)
                                             .LastOrDefault();
 
-        if (getLastNIK is null)
+        if (getlastNIK is null)
         {
             return "111111";
         }
 
-        var lastNIK = Convert.ToInt32(getLastNIK) + 1;
+        var lastNIK = Convert.ToInt32(getlastNIK) + 1;
         return lastNIK.ToString();
     }
 }

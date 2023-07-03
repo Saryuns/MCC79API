@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using API.DTOs.Universities;
 using API.Services;
-using API.Utilities.Enums;
+using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -24,7 +24,7 @@ public class UniversityController : ControllerBase
 
         if (!entities.Any())
         {
-            return NotFound(new ResponseHandler<GetUniversityDto>
+            return NotFound(new ResponseHandler<UniversityDto>
             {
                 Code = StatusCodes.Status404NotFound,
                 Status = HttpStatusCode.NotFound.ToString(),
@@ -32,7 +32,7 @@ public class UniversityController : ControllerBase
             });
         }
 
-        return Ok(new ResponseHandler<IEnumerable<GetUniversityDto>>
+        return Ok(new ResponseHandler<IEnumerable<UniversityDto>>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -47,7 +47,7 @@ public class UniversityController : ControllerBase
         var university = _service.GetUniversity(guid);
         if (university is null)
         {
-            return NotFound(new ResponseHandler<GetUniversityDto>
+            return NotFound(new ResponseHandler<UniversityDto>
             {
                 Code = StatusCodes.Status404NotFound,
                 Status = HttpStatusCode.NotFound.ToString(),
@@ -55,7 +55,7 @@ public class UniversityController : ControllerBase
             });
         }
 
-        return Ok(new ResponseHandler<GetUniversityDto>
+        return Ok(new ResponseHandler<UniversityDto>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -70,7 +70,7 @@ public class UniversityController : ControllerBase
         var createUniversity = _service.CreateUniversity(newUniversityDto);
         if (createUniversity is null)
         {
-            return BadRequest(new ResponseHandler<GetUniversityDto>
+            return BadRequest(new ResponseHandler<UniversityDto>
             {
                 Code = StatusCodes.Status400BadRequest,
                 Status = HttpStatusCode.BadRequest.ToString(),
@@ -78,7 +78,7 @@ public class UniversityController : ControllerBase
             });
         }
 
-        return Ok(new ResponseHandler<GetUniversityDto>
+        return Ok(new ResponseHandler<UniversityDto>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -88,12 +88,12 @@ public class UniversityController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult Update(UpdateUniversityDto updateUniversityDto)
+    public IActionResult Update(UniversityDto updateUniversityDto)
     {
         var update = _service.UpdateUniversity(updateUniversityDto);
         if (update is -1)
         {
-            return NotFound(new ResponseHandler<UpdateUniversityDto>
+            return NotFound(new ResponseHandler<UniversityDto>
             {
                 Code = StatusCodes.Status404NotFound,
                 Status = HttpStatusCode.NotFound.ToString(),
@@ -102,7 +102,7 @@ public class UniversityController : ControllerBase
         }
         if (update is 0)
         {
-            return BadRequest(new ResponseHandler<UpdateUniversityDto>
+            return BadRequest(new ResponseHandler<UniversityDto>
             {
                 Code = StatusCodes.Status500InternalServerError,
                 Status = HttpStatusCode.InternalServerError.ToString(),
@@ -110,7 +110,7 @@ public class UniversityController : ControllerBase
             });
         }
 
-        return Ok(new ResponseHandler<UpdateUniversityDto>
+        return Ok(new ResponseHandler<UniversityDto>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -125,7 +125,7 @@ public class UniversityController : ControllerBase
 
         if (delete is -1)
         {
-            return NotFound(new ResponseHandler<GetUniversityDto>
+            return NotFound(new ResponseHandler<UniversityDto>
             {
                 Code = StatusCodes.Status404NotFound,
                 Status = HttpStatusCode.NotFound.ToString(),
@@ -134,7 +134,7 @@ public class UniversityController : ControllerBase
         }
         if (delete is 0)
         {
-            return BadRequest(new ResponseHandler<GetUniversityDto>
+            return BadRequest(new ResponseHandler<UniversityDto>
             {
                 Code = StatusCodes.Status500InternalServerError,
                 Status = HttpStatusCode.InternalServerError.ToString(),
@@ -142,7 +142,7 @@ public class UniversityController : ControllerBase
             });
         }
 
-        return Ok(new ResponseHandler<GetUniversityDto>
+        return Ok(new ResponseHandler<UniversityDto>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
@@ -156,7 +156,7 @@ public class UniversityController : ControllerBase
         var universities = _service.GetUniversity(name);
         if (!universities.Any())
         {
-            return NotFound(new ResponseHandler<GetUniversityDto>
+            return NotFound(new ResponseHandler<UniversityDto>
             {
                 Code = StatusCodes.Status404NotFound,
                 Status = HttpStatusCode.NotFound.ToString(),
@@ -164,7 +164,7 @@ public class UniversityController : ControllerBase
             });
         }
 
-        return Ok(new ResponseHandler<IEnumerable<GetUniversityDto>>
+        return Ok(new ResponseHandler<IEnumerable<UniversityDto>>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),

@@ -8,9 +8,15 @@ public class EmployeeRepository : GeneralRepository<Employee>, IEmployeeReposito
 {
     public EmployeeRepository(BookingDbContext context) : base(context) { }
 
+    //add
+    public bool IsDuplicateValue(string value)
+    {
+        return _context.Set<Employee>()
+                       .FirstOrDefault(e => e.Email.Contains(value) || e.PhoneNumber.Contains(value)) is null;
+    }
+
     public Employee? GetByEmail(string email)
     {
-        /*return _context.Set<Employee>().Where(e => e.Email.Single(email));*/
-        return _context.Employees.SingleOrDefault(e => e.Email == email);
+        return _context.Set<Employee>().FirstOrDefault(e => e.Email == email);
     }
 }

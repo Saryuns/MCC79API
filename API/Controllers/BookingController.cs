@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using API.DTOs.Bookings;
 using API.Services;
-using API.Utilities.Enums;
+using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -65,7 +65,7 @@ public class BookingController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(BookingDto newBookingDto)
+    public IActionResult Create(NewBookingDto newBookingDto)
     {
         var createBooking = _service.CreateBooking(newBookingDto);
         if (createBooking is null)

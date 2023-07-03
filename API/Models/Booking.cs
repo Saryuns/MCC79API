@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using API.Utilities.Enums;
 
 namespace API.Models;
@@ -23,7 +22,7 @@ public class Booking : BaseEntity
     [Column("status")]
     public StatusLevel Status { get; set; }
 
-    [Column("remarks", TypeName = "nvarchar(255)")]
+    [Column("remarks")]
     public String? Remarks { get; set; }
 
     //Cardinality

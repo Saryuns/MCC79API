@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using API.DTOs.Roles;
 using API.Services;
-using API.Utilities.Enums;
+using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -65,7 +65,7 @@ public class RoleController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(RoleDto newRoleDto)
+    public IActionResult Create(NewRoleDto newRoleDto)
     {
         var createRole = _service.CreateRole(newRoleDto);
         if (createRole is null)

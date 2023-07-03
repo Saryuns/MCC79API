@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using API.DTOs.Rooms;
 using API.Services;
-using API.Utilities.Enums;
+using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -65,7 +65,7 @@ public class RoomController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(RoomDto newRoomDto)
+    public IActionResult Create(NewRoomDto newRoomDto)
     {
         var createRoom = _service.CreateRoom(newRoomDto);
         if (createRoom is null)

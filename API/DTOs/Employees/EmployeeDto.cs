@@ -1,4 +1,5 @@
-﻿using API.Utilities.Enums;
+﻿using API.Models;
+using API.Utilities.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs.Employees;

@@ -13,63 +13,63 @@ public class UniversityService
         _universityRepository = universityRepository;
     }
 
-    public IEnumerable<GetUniversityDto>? GetUniversity()
+    public IEnumerable<UniversityDto>? GetUniversity()
     {
         var universities = _universityRepository.GetAll();
         if (!universities.Any())
         {
-            return null; // No Universities found
+            return null;
         }
 
         var toDto = universities.Select(university =>
-                                            new GetUniversityDto
+                                            new UniversityDto
                                             {
                                                 Guid = university.Guid,
                                                 Code = university.Code,
                                                 Name = university.Name
                                             }).ToList();
 
-        return toDto; // Universities found
+        return toDto;
     }
 
-    public IEnumerable<GetUniversityDto>? GetUniversity(string name)
+    public IEnumerable<UniversityDto>? GetUniversity(string name)
     {
         var universities = _universityRepository.GetByName(name);
         if (!universities.Any())
         {
-            return null; // No universities found
+            return null;
         }
 
         var toDto = universities.Select(university =>
-                                            new GetUniversityDto
+                                            new UniversityDto
                                             {
                                                 Guid = university.Guid,
                                                 Code = university.Code,
                                                 Name = university.Name
                                             }).ToList();
 
-        return toDto; // Universities found
+        return toDto;
     }
 
-    public GetUniversityDto? GetUniversity(Guid guid)
+    public UniversityDto? GetUniversity(Guid guid)
     {
         var university = _universityRepository.GetByGuid(guid);
         if (university is null)
         {
-            return null; // University not found
+            return null;
         }
 
-        var toDto = new GetUniversityDto
+        var toDto = new UniversityDto
         {
             Guid = university.Guid,
             Code = university.Code,
             Name = university.Name
         };
 
-        return toDto; // Universities found
+        return toDto;
     }
 
-    public GetUniversityDto? CreateUniversity(NewUniversityDto newUniversityDto)
+    public UniversityDto? CreateUniversity(NewUniversityDto newUniversityDto)
     {
         var university = new University
         {
@@ -83,25 +83,25 @@ public class UniversityService
         var createdUniversity = _universityRepository.Create(university);
         if (createdUniversity is null)
         {
-            return null; // University not created
+            return null;
         }
 
-        var toDto = new GetUniversityDto
+        var toDto = new UniversityDto
         {
             Guid = createdUniversity.Guid,
             Code = createdUniversity.Code,
             Name = createdUniversity.Name
         };
 
-        return toDto; // University created
+        return toDto;
     }
 
-    public int UpdateUniversity(UpdateUniversityDto updateUniversityDto)
+    public int UpdateUniversity(UniversityDto updateUniversityDto)
     {
         var isExist = _universityRepository.IsExist(updateUniversityDto.Guid);
         if (!isExist)
         {
-            return -1; // University not found
+            return -1;
         }
 
         var getUniversity = _universityRepository.GetByGuid(updateUniversityDto.Guid);
@@ -118,7 +118,7 @@ public class UniversityService
         var isUpdate = _universityRepository.Update(university);
         if (!isUpdate)
         {
-            return 0; // University not updated
+            return 0;
         }
 
         return 1;
@@ -129,14 +129,14 @@ public class UniversityService
         var isExist = _universityRepository.IsExist(guid);
         if (!isExist)
         {
-            return -1; // University not found
+            return -1;
         }
 
         var university = _universityRepository.GetByGuid(guid);
         var isDelete = _universityRepository.Delete(university!);
         if (!isDelete)
         {
-            return 0; // University not deleted
+            return 0;
         }
 
         return 1;

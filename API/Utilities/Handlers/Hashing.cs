@@ -1,4 +1,4 @@
-﻿namespace API.Utilities.Enums;
+﻿namespace API.Utilities.Handlers;
 
 public class Hashing
 {
@@ -7,12 +7,12 @@ public class Hashing
         return BCrypt.Net.BCrypt.GenerateSalt(12);
     }
 
-    public static string HashPassword(string password)
+    public static string Hash(string password)
     {
         return BCrypt.Net.BCrypt.HashPassword(password, GenerateSalt());
     }
 
-    public static bool ValidatePassword(string password, string hashPassword)
+    public static bool Validate(string password, string hashPassword)
     {
         return BCrypt.Net.BCrypt.Verify(password, hashPassword);
     }

@@ -1,9 +1,6 @@
 ﻿using API.Contracts;
 using API.DTOs.Rooms;
 using API.Models;
-using API.Utilities.Enums;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 
 namespace API.Services;
 
@@ -55,7 +52,7 @@ public class RoomService
         return toDto;
     }
 
-    public RoomDto? CreateRoom(RoomDto newRoomDto)
+    public RoomDto? CreateRoom(NewRoomDto newRoomDto)
     {
         var room = new Room
         {

@@ -1,9 +1,6 @@
 ﻿using API.Contracts;
 using API.DTOs.Educations;
 using API.Models;
-using API.Utilities.Enums;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 
 namespace API.Services;
 

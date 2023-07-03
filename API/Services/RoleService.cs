@@ -1,9 +1,6 @@
 ﻿using API.Contracts;
 using API.DTOs.Roles;
 using API.Models;
-using API.Utilities.Enums;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 
 namespace API.Services;
 
@@ -51,7 +48,7 @@ public class RoleService
         return toDto;
     }
 
-    public RoleDto? CreateRole(RoleDto newRoleDto)
+    public RoleDto? CreateRole(NewRoleDto newRoleDto)
     {
         var role = new Role
         {

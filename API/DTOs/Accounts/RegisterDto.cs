@@ -1,5 +1,4 @@
-﻿using API.Utilities;
-using API.Utilities.Enums;
+﻿using API.Utilities.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs.Accounts
@@ -37,7 +36,7 @@ namespace API.DTOs.Accounts
 
         [Required]
         [Range(0, 4, ErrorMessage = "GPA must betwen 0 - 4")]
-        public Double GPA { get; set; }
+        public float GPA { get; set; }
 
         [Required]
         public string UniversityCode { get; set; }

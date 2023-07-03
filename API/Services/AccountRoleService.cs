@@ -52,7 +52,7 @@ public class AccountRoleService
 
     public AccountRoleDto? CreateAccount(AccountRoleDto newAccountRoleDto)
     {
-        var accountrole = new AccountRole
+        var accountRole = new AccountRole
         {
             Guid = new Guid(),
             AccountGuid = newAccountRoleDto.AccountGuid,
@@ -61,7 +61,7 @@ public class AccountRoleService
             ModifiedDate = DateTime.Now
         };
 
-        var createdAccountRole = _accountroleRepository.Create(accountrole);
+        var createdAccountRole = _accountroleRepository.Create(accountRole);
         if (createdAccountRole is null)
         {
             return null;
@@ -87,7 +87,7 @@ public class AccountRoleService
 
         var getAccountRole = _accountroleRepository.GetByGuid(updateAccountRoleDto.Guid);
 
-        var accountrole = new AccountRole
+        var accountRole = new AccountRole
         {
             Guid = updateAccountRoleDto.Guid,
             AccountGuid = updateAccountRoleDto.AccountGuid,
@@ -96,7 +96,7 @@ public class AccountRoleService
             CreatedDate = getAccountRole!.CreatedDate
         };
 
-        var isUpdate = _accountroleRepository.Update(accountrole);
+        var isUpdate = _accountroleRepository.Update(accountRole);
         if (!isUpdate)
         {
             return 0;

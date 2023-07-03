@@ -2,23 +2,121 @@
 using API.DTOs.Accounts;
 using API.Services;
 using API.Utilities.Enums;
+using API.Utilities.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/accounts")]
+
+//add
+[Authorize(Roles = $"{nameof(RoleType.Admin)}")]
+
 public class AccountController : ControllerBase
 {
     private readonly AccountService _service;
+    
+    //Add Roles
+    private readonly RoleService _roleService;
 
-    public AccountController(AccountService service)
+    public AccountController(AccountService service, RoleService roleService)
     {
         _service = service;
+        _roleService = roleService;
     }
 
-    //[Route("register")]
-    [HttpPost("register")]
+    //add
+    [Authorize(Roles = $"{nameof(RoleType.User)}")]
+    [HttpPost("ChangePassword")]
+    public IActionResult ChangePassword(ChangePasswordDto changePasswordDto)
+    {
+        var isUpdated = _service.ChangePassword(changePasswordDto);
+        if (isUpdated == 0)
+            return NotFound(new ResponseHandler<AccountDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Email not found"
+            });
+
+        if (isUpdated == -1)
+        {
+            return BadRequest(new ResponseHandler<AccountDto>
+            {
+                Code = StatusCodes.Status400BadRequest,
+                Status = HttpStatusCode.BadRequest.ToString(),
+                Message = "Otp is already used"
+            });
+        }
+
+        if (isUpdated == -2)
+        {
+            return BadRequest(new ResponseHandler<AccountDto>
+            {
+                Code = StatusCodes.Status400BadRequest,
+                Status = HttpStatusCode.BadRequest.ToString(),
+                Message = "Otp is incorrect"
+            });
+        }
+
+        if (isUpdated == -3)
+        {
+            return BadRequest(new ResponseHandler<AccountDto>
+            {
+                Code = StatusCodes.Status400BadRequest,
+                Status = HttpStatusCode.BadRequest.ToString(),
+                Message = "Otp is expired"
+            });
+        }
+
+        if (isUpdated is -4)
+            return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHandler<AccountDto>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Error retrieving data from the database"
+            });
+
+        return Ok(new ResponseHandler<AccountDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Password has been changed successfully"
+        });
+    }
+
+    [AllowAnonymous]
+    [HttpPost("ForgotPassword")]
+    public IActionResult ForgotPassword(ForgotPasswordDto forgotPassword)
+    {
+        var isUpdated = _service.ForgotPassword(forgotPassword);
+        if (isUpdated == 0)
+            return NotFound(new ResponseHandler<AccountDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Email not found"
+            });
+
+        if (isUpdated is -1)
+            return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHandler<AccountDto>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Error retrieving data from the database"
+            });
+
+        return Ok(new ResponseHandler<AccountDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Otp has been sent to your email"
+        });
+    }
+
+    [HttpPost("Register")]
     public IActionResult Register(RegisterDto register)
     {
         var createdRegister = _service.Register(register);
@@ -84,9 +182,9 @@ public class AccountController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
-        var entities = _service.GetAccount();
+        var accounts = _service.GetAccount();
 
-        if (entities == null)
+        if (accounts == null)
         {
             return NotFound(new ResponseHandler<AccountDto>
             {
@@ -101,10 +199,11 @@ public class AccountController : ControllerBase
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
             Message = "Data found",
-            Data = entities
+            Data = accounts
         });
     }
-    /*[HttpGet]
+    /*
+    [HttpGet]
     public IActionResult GetAll()
     {
         var entities = _service.GetAccount();
@@ -126,7 +225,8 @@ public class AccountController : ControllerBase
             Message = "Data Found",
             Data = entities
         });
-    }*/
+    }
+    */
 
     [HttpGet("{guid}")]
     public IActionResult GetByGuid(Guid guid)
