@@ -75,11 +75,11 @@ public class EducationService
 
         var toDto = new EducationDto
         {
-            Guid = createdEducation.Guid,
-            Major = createdEducation.Major,
-            Degree = createdEducation.Degree,
-            GPA = createdEducation.GPA,
-            UniversityGuid = createdEducation.UniversityGuid
+            Guid = education.Guid,
+            Major = education.Major,
+            Degree = education.Degree,
+            GPA = education.GPA,
+            UniversityGuid = education.UniversityGuid
         };
 
         return toDto;

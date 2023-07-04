@@ -1,5 +1,4 @@
-﻿//add kh
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs.Accounts;
 

@@ -4,6 +4,6 @@ namespace API.Contracts;
 
 public interface IAccountRoleRepository : IGeneralRepository<AccountRole>
 {
-    //add
+    ICollection<AccountRole> GetByGuidEmployee(Guid employeeGuid);
     IEnumerable<AccountRole> GetAccountRolesByAccountGuid(Guid guid);
 }

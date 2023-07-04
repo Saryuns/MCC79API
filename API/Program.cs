@@ -5,7 +5,6 @@ using API.Contracts;
 using API.Data;
 using API.Repositories;
 using API.Services;
-using API.Utilities.Enums;
 using API.Utilities.Handlers;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -18,7 +17,7 @@ using TokenHandler = API.Utilities.Handlers.TokenHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// add - Add services to the container
+// Add services to the container
 builder.Services.AddControllers()
        .ConfigureApiBehaviorOptions(options =>
        {
@@ -39,11 +38,11 @@ builder.Services.AddControllers()
            };
        });
 
-//add - add DbContext
+// Add DbContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BookingDbContext>(options => options.UseSqlServer(connectionString));
 
-//add - add repository to container
+// Add repository to container
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IEducationRepository, EducationRepository>();
@@ -53,7 +52,7 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
 
-// add - Add Service to the container
+// Add Service to the container
 builder.Services.AddScoped<UniversityService>();
 builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<EducationService>();
@@ -63,24 +62,24 @@ builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<AccountRoleService>();
 
-// add - Register Fluent validation
+// Register Fluent validation
 builder.Services.AddFluentValidationAutoValidation()
        .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-// add - Register Handler
+// Register Handler
 builder.Services.AddScoped<ITokenHandler, TokenHandler>();
 
-// add - Add SmtpClient
+// Add SmtpClient
 builder.Services.AddTransient<IEmailHandler, EmailHandler>(_ => new EmailHandler(
     builder.Configuration["EmailService:SmtpServer"],
     int.Parse(builder.Configuration["EmailService:SmtpPort"]),
     builder.Configuration["EmailService:FromEmailAddress"]
 ));
 
-// add - Add TokenHandler
+// Add TokenHandler
 builder.Services.AddScoped<ITokenHandler, TokenHandler>();
 
-// add - Jwt Configuration
+// Jwt Configuration
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        .AddJwtBearer(options =>
        {
@@ -98,7 +97,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
            };
        });
 
-// add - CORS Configuration
+// CORS Configuration
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -112,12 +111,12 @@ builder.Services.AddCors(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-//add
+// Add SwaggerGen
 builder.Services.AddSwaggerGen(x => {
     x.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "MCC79",
+        Title = "Metrodata Coding Camp",
         Description = "ASP.NET Core API 6.0"
     });
     x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -147,7 +146,7 @@ builder.Services.AddSwaggerGen(x => {
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -156,7 +155,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors();
+//app.UseCors();
 
 app.UseAuthentication();
 

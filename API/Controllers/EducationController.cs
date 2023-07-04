@@ -1,13 +1,16 @@
 ﻿using System.Net;
 using API.DTOs.Educations;
 using API.Services;
+using API.Utilities.Enums;
 using API.Utilities.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/educations")]
+[Authorize(Roles = $"{nameof(RoleType.Admin)}")]
 public class EducationController : ControllerBase
 {
     private readonly EducationService _service;
@@ -22,7 +25,7 @@ public class EducationController : ControllerBase
     {
         var entities = _service.GetEducation();
 
-        if (!entities.Any())
+        if (entities == null)
         {
             return NotFound(new ResponseHandler<EducationDto>
             {

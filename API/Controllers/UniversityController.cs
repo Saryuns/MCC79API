@@ -1,13 +1,16 @@
 ﻿using System.Net;
 using API.DTOs.Universities;
 using API.Services;
+using API.Utilities.Enums;
 using API.Utilities.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/universities")]
+[Authorize(Roles = $"{nameof(RoleType.Admin)}")]
 public class UniversityController : ControllerBase
 {
     private readonly UniversityService _service;
@@ -22,7 +25,7 @@ public class UniversityController : ControllerBase
     {
         var entities = _service.GetUniversity();
 
-        if (!entities.Any())
+        if (entities == null)
         {
             return NotFound(new ResponseHandler<UniversityDto>
             {

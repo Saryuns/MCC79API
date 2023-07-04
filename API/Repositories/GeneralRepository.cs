@@ -13,7 +13,7 @@ public class GeneralRepository<TEntity> : IGeneralRepository<TEntity> where TEnt
         _context = context;
     }
 
-    public IEnumerable<TEntity> GetAll()
+    public ICollection<TEntity> GetAll()
     {
         return _context.Set<TEntity>().ToList();
     }

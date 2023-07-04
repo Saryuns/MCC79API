@@ -88,9 +88,9 @@ public class UniversityService
 
         var toDto = new UniversityDto
         {
-            Guid = createdUniversity.Guid,
-            Code = createdUniversity.Code,
-            Name = createdUniversity.Name
+            Guid = university.Guid,
+            Code = university.Code,
+            Name = university.Name
         };
 
         return toDto;

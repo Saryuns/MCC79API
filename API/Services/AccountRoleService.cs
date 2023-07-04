@@ -6,27 +6,27 @@ namespace API.Services;
 
 public class AccountRoleService
 {
-    private readonly IAccountRoleRepository _accountroleRepository;
+    private readonly IAccountRoleRepository _accountRoleRepository;
 
-    public AccountRoleService(IAccountRoleRepository accountroleRepository)
+    public AccountRoleService(IAccountRoleRepository accountRoleRepository)
     {
-        _accountroleRepository = accountroleRepository;
+        _accountRoleRepository = accountRoleRepository;
     }
 
     public IEnumerable<AccountRoleDto>? GetAccountRole()
     {
-        var accountroles = _accountroleRepository.GetAll();
-        if (!accountroles.Any())
+        var accountRoles = _accountRoleRepository.GetAll();
+        if (!accountRoles.Any())
         {
             return null;
         }
 
-        var toDto = accountroles.Select(accountrole =>
+        var toDto = accountRoles.Select(accountRole =>
                                             new AccountRoleDto
                                             {
-                                                Guid = accountrole.Guid,
-                                                AccountGuid = accountrole.AccountGuid,
-                                                RoleGuid = accountrole.RoleGuid
+                                                Guid = accountRole.Guid,
+                                                AccountGuid = accountRole.AccountGuid,
+                                                RoleGuid = accountRole.RoleGuid
                                             }).ToList();
 
         return toDto;
@@ -34,17 +34,17 @@ public class AccountRoleService
 
     public AccountRoleDto? GetAccountRole(Guid guid)
     {
-        var accountrole = _accountroleRepository.GetByGuid(guid);
-        if (accountrole is null)
+        var accountRole = _accountRoleRepository.GetByGuid(guid);
+        if (accountRole is null)
         {
             return null;
         }
 
         var toDto = new AccountRoleDto
         {
-            Guid = accountrole.Guid,
-            AccountGuid = accountrole.AccountGuid,
-            RoleGuid = accountrole.RoleGuid
+            Guid = accountRole.Guid,
+            AccountGuid = accountRole.AccountGuid,
+            RoleGuid = accountRole.RoleGuid
         };
 
         return toDto;
@@ -61,7 +61,7 @@ public class AccountRoleService
             ModifiedDate = DateTime.Now
         };
 
-        var createdAccountRole = _accountroleRepository.Create(accountRole);
+        var createdAccountRole = _accountRoleRepository.Create(accountRole);
         if (createdAccountRole is null)
         {
             return null;
@@ -69,34 +69,34 @@ public class AccountRoleService
 
         var toDto = new AccountRoleDto
         {
-            Guid = createdAccountRole.Guid,
-            AccountGuid = createdAccountRole.AccountGuid,
-            RoleGuid = createdAccountRole.RoleGuid
+            Guid = accountRole.Guid,
+            AccountGuid = accountRole.AccountGuid,
+            RoleGuid = accountRole.RoleGuid
         };
 
         return toDto;
     }
 
-    public int UpdateAccountRole(AccountRoleDto updateAccountRoleDto)
+    public int UpdateAccountRole(AccountRoleDto updateAccountRole)
     {
-        var isExist = _accountroleRepository.IsExist(updateAccountRoleDto.Guid);
+        var isExist = _accountRoleRepository.IsExist(updateAccountRole.Guid);
         if (!isExist)
         {
             return -1;
         }
 
-        var getAccountRole = _accountroleRepository.GetByGuid(updateAccountRoleDto.Guid);
+        var getAccountRole = _accountRoleRepository.GetByGuid(updateAccountRole.Guid);
 
         var accountRole = new AccountRole
         {
-            Guid = updateAccountRoleDto.Guid,
-            AccountGuid = updateAccountRoleDto.AccountGuid,
-            RoleGuid = updateAccountRoleDto.RoleGuid,
+            Guid = updateAccountRole.Guid,
+            AccountGuid = updateAccountRole.AccountGuid,
+            RoleGuid = updateAccountRole.RoleGuid,
             ModifiedDate = DateTime.Now,
             CreatedDate = getAccountRole!.CreatedDate
         };
 
-        var isUpdate = _accountroleRepository.Update(accountRole);
+        var isUpdate = _accountRoleRepository.Update(accountRole);
         if (!isUpdate)
         {
             return 0;
@@ -107,14 +107,14 @@ public class AccountRoleService
 
     public int DeleteAccountRole(Guid guid)
     {
-        var isExist = _accountroleRepository.IsExist(guid);
+        var isExist = _accountRoleRepository.IsExist(guid);
         if (!isExist)
         {
             return -1;
         }
 
-        var accountrole = _accountroleRepository.GetByGuid(guid);
-        var isDelete = _accountroleRepository.Delete(accountrole!);
+        var accountRole = _accountRoleRepository.GetByGuid(guid);
+        var isDelete = _accountRoleRepository.Delete(accountRole!);
         if (!isDelete)
         {
             return 0;

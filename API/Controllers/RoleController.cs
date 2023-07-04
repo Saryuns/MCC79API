@@ -1,13 +1,16 @@
 ﻿using System.Net;
 using API.DTOs.Roles;
 using API.Services;
+using API.Utilities.Enums;
 using API.Utilities.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/roles")]
+[Authorize(Roles = $"{nameof(RoleType.Admin)}")]
 public class RoleController : ControllerBase
 {
     private readonly RoleService _service;
@@ -22,7 +25,7 @@ public class RoleController : ControllerBase
     {
         var entities = _service.GetRole();
 
-        if (!entities.Any())
+        if (entities == null)
         {
             return NotFound(new ResponseHandler<RoleDto>
             {

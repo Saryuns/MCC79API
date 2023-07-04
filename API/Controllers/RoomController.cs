@@ -1,13 +1,16 @@
 ﻿using System.Net;
 using API.DTOs.Rooms;
 using API.Services;
+using API.Utilities.Enums;
 using API.Utilities.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/rooms")]
+[Authorize(Roles = $"{nameof(RoleType.Admin)}")]
 public class RoomController : ControllerBase
 {
     private readonly RoomService _service;
@@ -22,7 +25,7 @@ public class RoomController : ControllerBase
     {
         var entities = _service.GetRoom();
 
-        if (!entities.Any())
+        if (entities == null)
         {
             return NotFound(new ResponseHandler<RoomDto>
             {
@@ -64,6 +67,28 @@ public class RoomController : ControllerBase
         });
     }
 
+    [HttpGet("empty")]
+    public IActionResult GetEmptyRoom()
+    {
+        var emptyRooms = _service.GetEmptyRoom();
+        if (emptyRooms.Count() == 0)
+        {
+            return NotFound(new ResponseHandler<EmptyRoomDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "all rooms are being used"
+            });
+        }
+        return Ok(new ResponseHandler<IEnumerable<EmptyRoomDto>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Data found",
+            Data = emptyRooms
+        });
+    }
+  
     [HttpPost]
     public IActionResult Create(NewRoomDto newRoomDto)
     {

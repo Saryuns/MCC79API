@@ -1,4 +1,5 @@
 ﻿using API.Utilities.Enums;
+using API.Utilities.Handlers;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs.Accounts
@@ -22,12 +23,14 @@ namespace API.DTOs.Accounts
 
         [Required]
         [EmailAddress]
+        //[EmployeeDuplicatePropertyAttribute("string", "Email")]
         public string Email { get; set; }
 
         [Required]
         [Phone]
+        //[EmployeeDuplicateProperty("string", "PhoneNumber")]
         public string PhoneNumber { get; set; }
-
+       
         [Required]
         public string Major { get; set; }
 

@@ -8,7 +8,11 @@ public class AccountRoleRepository : GeneralRepository<AccountRole>, IAccountRol
 {
     public AccountRoleRepository(BookingDbContext context) : base(context) { }
 
-    //add
+    public ICollection<AccountRole> GetByGuidEmployee(Guid employeeGuid)
+    {
+        return _context.Set<AccountRole>().Where(a => a.AccountGuid == employeeGuid).ToList();
+    }
+
     public IEnumerable<AccountRole> GetAccountRolesByAccountGuid(Guid guid)
     {
         return _context.Set<AccountRole>().Where(ar => ar.AccountGuid == guid);

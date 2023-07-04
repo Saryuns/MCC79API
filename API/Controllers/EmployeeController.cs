@@ -1,13 +1,16 @@
 ﻿using System.Net;
 using API.DTOs.Employees;
 using API.Services;
+using API.Utilities.Enums;
 using API.Utilities.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/employees")]
+[Authorize(Roles = $"{nameof(RoleType.Admin)}")]
 public class EmployeeController : ControllerBase
 {
     private readonly EmployeeService _service;
@@ -17,12 +20,64 @@ public class EmployeeController : ControllerBase
         _service = service;
     }
 
+    // GetAll data master Employee
+    [HttpGet("get-all-master-employee")]
+    [Authorize(Roles = $"{nameof(RoleType.Manager)}")]
+    public IActionResult GetAllMaster()
+    {
+        var entities = _service.GetAllMaster();
+
+        if (entities == null)
+        {
+            return NotFound(new ResponseHandler<EmployeeEducationDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<IEnumerable<EmployeeEducationDto>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Data found",
+            Data = entities
+        });
+    }
+
+    // GetByGuid Master Employee
+    [HttpGet("get-master/{guid}")]
+    [Authorize(Roles = $"{nameof(RoleType.Manager)}")]
+    public IActionResult GetMasterByGuid(Guid guid)
+    {
+        var employee = _service.GetMasterByGuid(guid);
+
+        if (employee is null)
+        {
+            return NotFound(new ResponseHandler<EmployeeEducationDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<EmployeeEducationDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Data found",
+            Data = employee
+        });
+    }
+
     [HttpGet]
     public IActionResult GetAll()
     {
         var entities = _service.GetEmployee();
 
-        if (!entities.Any())
+        if (entities == null)
         {
             return NotFound(new ResponseHandler<EmployeeDto>
             {

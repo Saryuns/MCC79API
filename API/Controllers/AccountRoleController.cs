@@ -1,13 +1,16 @@
 ﻿using System.Net;
 using API.DTOs.AccountRoles;
 using API.Services;
+using API.Utilities.Enums;
 using API.Utilities.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/account-roles")]
+[Authorize(Roles = $"{nameof(RoleType.Admin)}")]
 public class AccountRoleController : ControllerBase
 {
     private readonly AccountRoleService _service;
@@ -22,7 +25,7 @@ public class AccountRoleController : ControllerBase
     {
         var entities = _service.GetAccountRole();
 
-        if (!entities.Any())
+        if (entities == null)
         {
             return NotFound(new ResponseHandler<AccountRoleDto>
             {
@@ -44,8 +47,8 @@ public class AccountRoleController : ControllerBase
     [HttpGet("{guid}")]
     public IActionResult GetByGuid(Guid guid)
     {
-        var accountrole = _service.GetAccountRole(guid);
-        if (accountrole is null)
+        var accountRole = _service.GetAccountRole(guid);
+        if (accountRole is null)
         {
             return NotFound(new ResponseHandler<AccountRoleDto>
             {
@@ -60,7 +63,7 @@ public class AccountRoleController : ControllerBase
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
             Message = "Data Found",
-            Data = accountrole
+            Data = accountRole
         });
     }
 

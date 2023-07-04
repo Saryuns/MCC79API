@@ -2,9 +2,7 @@
 
 public interface IGeneralRepository<TEntity>
 {
-    //add
-    IEnumerable<TEntity> GetAll();
-
+    ICollection<TEntity> GetAll();
     TEntity? GetByGuid(Guid guid);
     TEntity? Create(TEntity entity);
     bool Update(TEntity entity);

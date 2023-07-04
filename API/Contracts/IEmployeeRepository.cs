@@ -4,9 +4,12 @@ namespace API.Contracts
 {
     public interface IEmployeeRepository : IGeneralRepository<Employee>
     {
-        Employee? GetByEmail(string email);
+        Employee? GetEmployeeByEmail(string email);
 
-        //add
+        string? GetLastEmployeeNik();
+
+        Employee? GetByEmailAndPhoneNumber(string nama);
+
         bool IsDuplicateValue(string value);
     }
 }

@@ -66,8 +66,8 @@ public class RoleService
 
         var toDto = new RoleDto
         {
-            Guid = createdRole.Guid,
-            Name = createdRole.Name
+            Guid = role.Guid,
+            Name = role.Name
         };
 
         return toDto;

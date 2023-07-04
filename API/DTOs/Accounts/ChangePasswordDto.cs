@@ -1,5 +1,4 @@
-﻿//add kh
-using API.Utilities.Enums;
+﻿using API.Utilities.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs.Accounts;
@@ -19,5 +18,6 @@ public class ChangePasswordDto
 
     [Required]
     [PasswordPolicy]
+    [Compare("NewPassword")]
     public string ConfirmNewPassword { get; set; }
 }

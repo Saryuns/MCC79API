@@ -24,34 +24,4 @@ public class AccountDto
 
     [Required]
     public DateTime ExpiredTime { get; set; }
-
-    public List<RoleType> Roles { get; set; }
 }
-
-    /* add
-    public static implicit operator Account(AccountDto accountDto)
-    {
-        return new()
-        {
-            Guid = accountDto.Guid,
-            Password = accountDto.Password,
-            IsDeleted = accountDto.IsDeleted,
-            OTP = accountDto.OTP,
-            IsUsed = accountDto.IsUsed,
-            ExpiredTime = accountDto.ExpiredTime
-        };
-    }
-
-    public static explicit operator AccountDto(Account account)
-    {
-        return new()
-        {
-            Guid = account.Guid,
-            Password = account.Password,
-            IsDeleted = account.IsDeleted,
-            OTP = account.OTP,
-            IsUsed = account.IsUsed,
-            ExpiredTime = account.ExpiredTime
-        };
-    }
-    */
